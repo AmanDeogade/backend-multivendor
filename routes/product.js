@@ -129,5 +129,24 @@ productRoute.put('/api/edit-product/:productId', async (req, res) => {
     }
 });
 
+productRoute.get('/api/product/vendor/:vendorId', async (req, res) => {
+    try{
+        const {vendorId} = req.params;
+        const vendorExists = await Vendor.findById(vendorId);
+
+        if(!vendorExists){
+            return res.status(404).json({msg: "Vendor with this id does not exist"});
+        }
+        const products = await Product.find({vendorId});
+        if(!products || products.length === 0){
+            return res.status(404).json({msg: "No products found"});
+        }
+        return res.status(200).json({products});
+
+    } catch(e){
+        res.status(500).json({error: e.message});
+    }
+});
+
 
 module.exports = productRoute;
