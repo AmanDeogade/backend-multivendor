@@ -93,5 +93,28 @@ authRouter.put('/api/user/:id', async (req,res)=>{
     }
 })
 
+authRouter.delete('/api/user/delete-account/:id', async (req,res)=>{
+    try{
+        const {id} = req.params;
+        const user = await User.findById(id);
+        const vendor = await Vendor.findById(id);
+
+        if(!user && !vendor){
+            return res.status(404).json({msg: "user with this id does not exist"});
+        }
+        if(user){
+            await User.findByIdAndDelete(id);
+            return res.status(200).json({msg: "user deleted successfully"});
+        }
+        else if(vendor){
+            await Vendor.findByIdAndDelete(id);
+            return res.status(200).json({msg: "vendor deleted successfully"});
+        }
+        
+    } catch (e) {
+        res.status(500).json({ error: e.message });
+    }
+});
+
 
 module.exports = authRouter;
