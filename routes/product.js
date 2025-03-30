@@ -1,5 +1,6 @@
 const express = require('express');
 const Product = require('../models/product');
+const Vendor = require('../models/vendor');
 const productRoute = express.Router();
 
 productRoute.post('/api/add-product', async (req, res) => { 
