@@ -13,7 +13,7 @@ const orderRouter = require('./routes/order');
 const cors = require('cors');
 
 //Defind the port number the server will listen to
-const PORT = 3000;
+const PORT = process.env.PORT || 3000 ;
 
 //create a instance of express application
 //because it give us the starting point
